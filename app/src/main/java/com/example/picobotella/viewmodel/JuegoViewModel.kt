@@ -16,6 +16,15 @@ class JuegoViewModel: ViewModel() {
     private val _rotacionBotella = MutableLiveData<RotateAnimation>()
     val rotacionBotella: LiveData<RotateAnimation> get() = _rotacionBotella
 
+    private val _habilitarBoton = MutableLiveData(true)
+    val habilitarBoton: LiveData<Boolean> get() = _habilitarBoton
+
+    private val _isCerpentina = MutableLiveData(false)
+    val isCerpentina: LiveData<Boolean> get() = _isCerpentina
+
+    private val _estadoRotacion = MutableLiveData(false)
+    val estadoRotacion: LiveData<Boolean> get() = _estadoRotacion
+
     fun splashScreen(activity: Activity) {
         val handler = Handler()
         handler.postDelayed({
@@ -25,6 +34,9 @@ class JuegoViewModel: ViewModel() {
     }
 
     fun girarBotella() {
+        _habilitarBoton.value = false
+        _isCerpentina.value = true
+        _estadoRotacion.value = true
         val grados = (Math.random() *3600) + 1800
         val rotacion = RotateAnimation( 0f, grados.toFloat(),
             Animation.RELATIVE_TO_SELF,
@@ -37,15 +49,17 @@ class JuegoViewModel: ViewModel() {
 
         rotacion.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onAnimationEnd(p0: Animation?) {
-                TODO("Not yet implemented")
+                _habilitarBoton.value = true
+                _isCerpentina.value = false
+                _estadoRotacion.value = false
             }
 
             override fun onAnimationRepeat(p0: Animation?) {
-                TODO("Not yet implemented")
+
             }
         })
 

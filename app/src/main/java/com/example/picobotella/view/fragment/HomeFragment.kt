@@ -5,13 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentHomeBinding
 import com.example.picobotella.viewmodel.JuegoViewModel
 
 class HomeFragment : Fragment() {
+    // private lateinit var navController: NavController
     private val juegoViewModel: JuegoViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
 
@@ -23,15 +25,36 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         return binding.root
     }
-
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controladores(view)
         observadorViewModel()
+        observadorHabilitarBoton()
+        observadorCerpentinaOn()
+    }
+
+    private fun observadorCerpentinaOn() {
+        juegoViewModel.isCerpentina.observe(viewLifecycleOwner) {status ->
+            binding.lottieCerpentina.isVisible = status
+            binding.lottieCerpentina.playAnimation()
+        }
+    }
+
+    private fun observadorHabilitarBoton() {
+        juegoViewModel.habilitarBoton.observe(viewLifecycleOwner) { habilitarBoton ->
+            binding.btnGirar.isVisible = habilitarBoton
+        }
+
     }
 
     private fun controladores(view: View) {
+       // navController = Navigation.findNavController(view)
+
+        binding.icContentMenu.idImgReglas.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_reglasJuegoFragment)
+        }
+
         binding.btnGirar.setOnClickListener {
             juegoViewModel.girarBotella()
         }
@@ -39,7 +62,11 @@ class HomeFragment : Fragment() {
 
     private fun observadorViewModel() {
         juegoViewModel.rotacionBotella.observe(viewLifecycleOwner) { rotacion ->
-            binding.ivBotella.startAnimation(rotacion)
+            juegoViewModel.estadoRotacion.observe(viewLifecycleOwner) { estadoRotacion ->
+                if (estadoRotacion) {
+                    binding.ivBotella.startAnimation(rotacion)
+                }
+            }
         }
     }
 }

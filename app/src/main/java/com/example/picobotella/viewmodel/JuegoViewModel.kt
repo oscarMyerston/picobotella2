@@ -1,6 +1,7 @@
 package com.example.picobotella.viewmodel
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.view.animation.Animation
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.picobotella.utils.Constants.TIEMPO
 import com.example.picobotella.view.MainActivity
+import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
 
 class JuegoViewModel: ViewModel() {
     private val _rotacionBotella = MutableLiveData<RotateAnimation>()
@@ -24,6 +26,9 @@ class JuegoViewModel: ViewModel() {
 
     private val _estadoRotacion = MutableLiveData(false)
     val estadoRotacion: LiveData<Boolean> get() = _estadoRotacion
+
+    private val _statusShowDialog = MutableLiveData(false)
+    val statusShowDialog: LiveData<Boolean> get() = _statusShowDialog
 
     fun splashScreen(activity: Activity) {
         val handler = Handler()
@@ -56,6 +61,7 @@ class JuegoViewModel: ViewModel() {
                 _habilitarBoton.value = true
                 _isCerpentina.value = false
                 _estadoRotacion.value = false
+                _statusShowDialog.value = true
             }
 
             override fun onAnimationRepeat(p0: Animation?) {
@@ -64,6 +70,14 @@ class JuegoViewModel: ViewModel() {
         })
 
         _rotacionBotella.value = rotacion
+    }
+
+    fun dialogoMostraReto(context: Context, mensajeReto: String) {
+        showDialogMostrarReto(context, mensajeReto)
+    }
+
+    fun statusShowDialog(status: Boolean) {
+        _statusShowDialog.value = status
     }
 
 }

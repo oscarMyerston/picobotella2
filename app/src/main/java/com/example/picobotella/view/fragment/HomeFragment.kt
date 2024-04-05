@@ -32,6 +32,16 @@ class HomeFragment : Fragment() {
         observadorViewModel()
         observadorHabilitarBoton()
         observadorCerpentinaOn()
+        observadorShowDialogReto()
+    }
+
+    private fun observadorShowDialogReto() {
+        juegoViewModel.statusShowDialog.observe(viewLifecycleOwner) {status ->
+            if (status) {
+                val mensajeReto = "Debes tomar dos tragos"
+                juegoViewModel.dialogoMostraReto(requireContext(), mensajeReto)
+            }
+        }
     }
 
     private fun observadorCerpentinaOn() {
@@ -53,6 +63,7 @@ class HomeFragment : Fragment() {
 
         binding.icContentMenu.idImgReglas.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_reglasJuegoFragment)
+            juegoViewModel.statusShowDialog(false)
         }
 
         binding.btnGirar.setOnClickListener {

@@ -3,6 +3,7 @@ package com.example.picobotella.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import com.example.picobotella.utils.Constants.TIEMPO
 import com.example.picobotella.view.MainActivity
 import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
+import kotlinx.coroutines.delay
 
 class JuegoViewModel: ViewModel() {
     private val _rotacionBotella = MutableLiveData<RotateAnimation>()
@@ -39,8 +41,6 @@ class JuegoViewModel: ViewModel() {
     }
 
     fun girarBotella() {
-        _habilitarBoton.value = false
-        _isCerpentina.value = true
         _estadoRotacion.value = true
         val grados = (Math.random() *3600) + 1800
         val rotacion = RotateAnimation( 0f, grados.toFloat(),
@@ -54,7 +54,8 @@ class JuegoViewModel: ViewModel() {
 
         rotacion.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
-
+                _habilitarBoton.value = false
+                _isCerpentina.value = true
             }
 
             override fun onAnimationEnd(p0: Animation?) {
@@ -72,12 +73,16 @@ class JuegoViewModel: ViewModel() {
         _rotacionBotella.value = rotacion
     }
 
-    fun dialogoMostraReto(context: Context, mensajeReto: String) {
-        showDialogMostrarReto(context, mensajeReto)
+    fun dialogoMostraReto(context: Context, audioFondo: MediaPlayer, mensajeReto: String) {
+        showDialogMostrarReto(context, audioFondo, mensajeReto)
     }
 
     fun statusShowDialog(status: Boolean) {
         _statusShowDialog.value = status
+    }
+
+    suspend fun esperar(tiempo: Int) {
+        delay(tiempo * 1000L)
     }
 
 }

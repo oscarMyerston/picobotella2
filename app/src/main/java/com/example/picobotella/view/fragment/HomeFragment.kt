@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private val juegoViewModel: JuegoViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-
+    var sonido = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +42,21 @@ class HomeFragment : Fragment() {
         observadorCerpentinaOn()
         observadorShowDialogReto()
         controladoresMultimedia()
+        observadorSonido()
+    }
+
+    private fun observadorSonido() {
+        juegoViewModel.habilitarSonido.observe(viewLifecycleOwner) { status ->
+            if (status) {
+                audioFondo.setVolume(0f, 0f)
+                binding.icContentMenu.idImgVolume.isVisible = !status
+                binding.icContentMenu.idImgNoVolume.isVisible = status
+            } else {
+                audioFondo.setVolume(1f, 1f)
+                binding.icContentMenu.idImgVolume.isVisible = !status
+                binding.icContentMenu.idImgNoVolume.isVisible = status
+            }
+        }
     }
 
     private fun controladoresMultimedia() {
@@ -95,6 +110,11 @@ class HomeFragment : Fragment() {
 
         binding.btnGirar.setOnClickListener {
             juegoViewModel.girarBotella()
+        }
+
+        binding.icContentMenu.clVolumen.setOnClickListener {
+            sonido = !sonido
+            juegoViewModel.setHabilitarSonido(sonido)
         }
     }
 

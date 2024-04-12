@@ -37,30 +37,43 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/idImgVolume" />
+                    app:layout_constraintEnd_toStartOf="@+id/cl_volumen" />
 
-                <ImageView
-                    android:id="@+id/idImgVolume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_volumen"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idImgEstrella"
-                    app:layout_constraintEnd_toStartOf="@+id/idImgReglas" />
-
-                <ImageView
-                    android:id="@+id/idImgNoVolume"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_volumen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_no_volumen"
-                    android:layout_margin="10dp"
+                    android:clickable="true"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/idImgEstrella"
-                    app:layout_constraintEnd_toStartOf="@+id/idImgReglas"
-                    android:visibility="gone" />
+                    app:layout_constraintEnd_toStartOf="@id/idImgReglas"
+                    app:layout_constraintStart_toEndOf="@id/idImgEstrella">
+
+                    <ImageView
+                        android:id="@+id/idImgVolume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_volumen"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/idImgNoVolume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_volumen"
+                        android:layout_margin="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:visibility="gone" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <ImageView
                     android:id="@+id/idImgReglas"
@@ -69,7 +82,7 @@
                     android:layout_margin="10dp"
                     android:src="@drawable/ic_reglas_juegos"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/idImgVolume"
+                    app:layout_constraintStart_toEndOf="@+id/cl_volumen"
                     app:layout_constraintEnd_toStartOf="@+id/idImgAgregarReto"
                     app:layout_constraintBottom_toBottomOf="parent" />
 

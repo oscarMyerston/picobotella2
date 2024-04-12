@@ -32,6 +32,9 @@ class JuegoViewModel: ViewModel() {
     private val _statusShowDialog = MutableLiveData(false)
     val statusShowDialog: LiveData<Boolean> get() = _statusShowDialog
 
+    private val _habilitarSonido = MutableLiveData(false)
+    val habilitarSonido: LiveData<Boolean> get() = _habilitarSonido
+
     fun splashScreen(activity: Activity) {
         val handler = Handler()
         handler.postDelayed({
@@ -83,6 +86,10 @@ class JuegoViewModel: ViewModel() {
 
     suspend fun esperar(tiempo: Int) {
         delay(tiempo * 1000L)
+    }
+
+    fun setHabilitarSonido(habilitar: Boolean) {
+        _habilitarSonido.value = habilitar
     }
 
 }

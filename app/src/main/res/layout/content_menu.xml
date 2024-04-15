@@ -92,6 +92,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:src="@drawable/ic_agregar_reto"
+                    android:clickable="true"
+                    android:background="?selectableItemBackgroundBorderless"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/idImgReglas"

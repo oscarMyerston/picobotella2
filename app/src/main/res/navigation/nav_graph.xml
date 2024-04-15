@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_homeFragment_to_reglasJuegoFragment"
             app:destination="@id/reglasJuegoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_agregarRetoFragment"
+            app:destination="@id/agregarRetoFragment" />
     </fragment>
     <fragment
         android:id="@+id/reglasJuegoFragment"
         android:name="com.example.picobotella.view.fragment.ReglasJuegoFragment"
         android:label="fragment_reglas_juego"
         tools:layout="@layout/fragment_reglas_juego" />
+    <fragment
+        android:id="@+id/agregarRetoFragment"
+        android:name="com.example.picobotella.view.fragment.AgregarRetoFragment"
+        android:label="AgregarRetoFragment"
+        tools:layout="@layout/fragment_agregar_reto"/>
 </navigation>

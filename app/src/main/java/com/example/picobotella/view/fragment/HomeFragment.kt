@@ -116,6 +116,12 @@ class HomeFragment : Fragment() {
             sonido = !sonido
             juegoViewModel.setHabilitarSonido(sonido)
         }
+
+        binding.icContentMenu.idImgAgregarReto.setOnClickListener {
+            audioFondo.pause()
+            findNavController().navigate(R.id.action_homeFragment_to_agregarRetoFragment)
+            juegoViewModel.statusShowDialog(false)
+        }
     }
 
     private fun observadorViewModel() {

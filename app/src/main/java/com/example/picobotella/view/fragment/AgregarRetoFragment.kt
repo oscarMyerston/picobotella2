@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentAgregarRetoBinding
+import com.example.picobotella.view.dialogo.DialogoAgregarReto.showDialogAgregarReto
 import com.example.picobotella.viewmodel.JuegoViewModel
 
 
@@ -34,6 +35,12 @@ class AgregarRetoFragment : Fragment() {
     private fun controladores() {
         binding.icContentBarra.ivAtras.setOnClickListener {
             findNavController(). popBackStack()
+        }
+
+        binding.floatBtn.setOnClickListener {
+            showDialogAgregarReto(requireContext(), juegoViewModel) {
+
+            }
         }
     }
 

@@ -7,5 +7,9 @@
     <string name="retos">Retos</string>
     <string name="descripcion_reto">Descripción reto</string>
     <string name="btn_flotante">Agregar retor</string>
+    <string name="agregar_reto">Agregar Reto</string>
+    <string name="texto_hint">Escriba el reto</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_guardar">Guardar</string>
 
 </resources>

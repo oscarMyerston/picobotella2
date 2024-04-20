@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.example.picobotella.databinding.DialogoAgregarRetoBinding
+import com.example.picobotella.model.Reto
 import com.example.picobotella.viewmodel.JuegoViewModel
 
 object DialogoAgregarReto {
@@ -28,8 +29,11 @@ object DialogoAgregarReto {
         }
 
         binding.idBtnGuardar.setOnClickListener {
-            actualizarLista.invoke()
+            val descripcion = binding.idEditPeniencia.text.toString().trim()
+            val reto = Reto(descripcionReto = descripcion)
+            juegoViewModel.agregarReto(reto)
             alertDialog.dismiss()
+            actualizarLista.invoke()
         }
 
         alertDialog.show()

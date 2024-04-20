@@ -1,6 +1,7 @@
 package com.example.picobotella.viewmodel
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -8,15 +9,25 @@ import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.picobotella.model.Reto
+import com.example.picobotella.repository.RetoRepository
 import com.example.picobotella.utils.Constants.TIEMPO
 import com.example.picobotella.view.MainActivity
 import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
-class JuegoViewModel: ViewModel() {
+class JuegoViewModel(application: Application): AndroidViewModel(application) {
+    private val context = getApplication<Application>()
+    private val retoRepository = RetoRepository(context)
+
     private val _rotacionBotella = MutableLiveData<RotateAnimation>()
     val rotacionBotella: LiveData<RotateAnimation> get() = _rotacionBotella
 
@@ -35,12 +46,16 @@ class JuegoViewModel: ViewModel() {
     private val _habilitarSonido = MutableLiveData(false)
     val habilitarSonido: LiveData<Boolean> get() = _habilitarSonido
 
+    private val _listaReto = MutableLiveData<MutableList<Reto>>()
+    val listaReto: LiveData<MutableList<Reto>> get() = _listaReto
+
     fun splashScreen(activity: Activity) {
-        val handler = Handler()
-        handler.postDelayed({
+        val executor = Executors.newSingleThreadScheduledExecutor()
+        executor.schedule({
             activity.startActivity(Intent(activity, MainActivity::class.java))
             activity.finish()
-        },TIEMPO)
+        }, TIEMPO, TimeUnit.MILLISECONDS)
+
     }
 
     fun girarBotella() {
@@ -92,4 +107,23 @@ class JuegoViewModel: ViewModel() {
         _habilitarSonido.value = habilitar
     }
 
+    fun agregarReto(reto: Reto) {
+        viewModelScope.launch {
+            try {
+                retoRepository.agregarReto(reto)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun obtenerListaReto() {
+        viewModelScope.launch {
+            try {
+                _listaReto.value =  retoRepository.obtenerListaReto()
+            } catch (e: Exception) {
+
+            }
+        }
+    }
 }

@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentAgregarRetoBinding
+import com.example.picobotella.view.adapter.RetoAdapter
 import com.example.picobotella.view.dialogo.DialogoAgregarReto.showDialogAgregarReto
 import com.example.picobotella.viewmodel.JuegoViewModel
 
@@ -39,12 +42,26 @@ class AgregarRetoFragment : Fragment() {
 
         binding.floatBtn.setOnClickListener {
             showDialogAgregarReto(requireContext(), juegoViewModel) {
-
+                observadorListaReto()
             }
         }
     }
 
     private fun observadorViewModel() {
+        observadorListaReto()
+    }
 
+    private fun observadorListaReto() {
+        juegoViewModel.obtenerListaReto()
+        juegoViewModel.listaReto.observe(viewLifecycleOwner) { lista ->
+            val recycler = binding.reciclerview
+            val layoutManager = LinearLayoutManager(context)
+            layoutManager.reverseLayout = true
+            recycler.layoutManager = layoutManager
+            val adapter = RetoAdapter(lista, juegoViewModel)
+            recycler.adapter = adapter
+            adapter.notifyDataSetChanged()
+
+        }
     }
 }

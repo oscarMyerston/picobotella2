@@ -126,4 +126,25 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+    fun deleteReto(reto: Reto) {
+        viewModelScope.launch {
+            try {
+                retoRepository.delete(reto)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun updateReto(reto: Reto) {
+        viewModelScope.launch {
+            try {
+                retoRepository.update(reto)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
 }

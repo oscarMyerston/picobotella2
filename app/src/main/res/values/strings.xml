@@ -11,5 +11,9 @@
     <string name="texto_hint">Escriba el reto</string>
     <string name="btn_cancelar">Cancelar</string>
     <string name="btn_guardar">Guardar</string>
+    <string name="title_dialog_eliminar">¿Deseas eliminar el siguiente reto?:</string>
+    <string name="editar_reto">Editar Reto</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
 
 </resources>

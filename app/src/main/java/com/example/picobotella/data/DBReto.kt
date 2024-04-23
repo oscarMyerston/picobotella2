@@ -22,7 +22,7 @@ abstract class DBReto: RoomDatabase() {
                     DBReto::class.java,
                     NAME_DB
                 )
-                    .createFromAsset("database/${NAME_DB}")
+                    //.createFromAsset("database/${NAME_DB}")
                     .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance

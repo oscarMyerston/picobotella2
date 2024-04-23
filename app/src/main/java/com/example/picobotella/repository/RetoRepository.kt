@@ -22,4 +22,16 @@ class RetoRepository(val context: Context) {
         }
     }
 
+    suspend fun  delete(reto: Reto) {
+        withContext(Dispatchers.IO) {
+            daoReto.delete(reto)
+        }
+    }
+
+    suspend fun update(reto: Reto) {
+        withContext(Dispatchers.IO) {
+            daoReto.update(reto)
+        }
+    }
+
 }

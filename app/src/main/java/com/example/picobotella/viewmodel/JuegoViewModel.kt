@@ -49,6 +49,10 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
     private val _listaReto = MutableLiveData<MutableList<Reto>>()
     val listaReto: LiveData<MutableList<Reto>> get() = _listaReto
 
+
+    private val _progresState = MutableLiveData(false)
+    val progresState: LiveData<Boolean> get() = _progresState
+
     fun splashScreen(activity: Activity) {
         val executor = Executors.newSingleThreadScheduledExecutor()
         executor.schedule({
@@ -109,40 +113,49 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
 
     fun agregarReto(reto: Reto) {
         viewModelScope.launch {
+            _progresState.value = true
             try {
                 retoRepository.agregarReto(reto)
+                _progresState.value = false
             } catch (e: Exception) {
-
+                _progresState .value = false
             }
         }
     }
 
     fun obtenerListaReto() {
         viewModelScope.launch {
+            _progresState.value = true
             try {
                 _listaReto.value =  retoRepository.obtenerListaReto()
-            } catch (e: Exception) {
+                _progresState.value = false
 
+            } catch (e: Exception) {
+                _progresState.value = false
             }
         }
     }
 
     fun deleteReto(reto: Reto) {
         viewModelScope.launch {
+            _progresState.value = true
             try {
                 retoRepository.delete(reto)
+                _progresState.value = false
             } catch (e: Exception) {
-
+                _progresState.value = false
             }
         }
     }
 
     fun updateReto(reto: Reto) {
         viewModelScope.launch {
+            _progresState.value = true
             try {
                 retoRepository.update(reto)
+                _progresState.value = false
             } catch (e: Exception) {
-
+                _progresState.value = false
             }
         }
     }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +50,13 @@ class AgregarRetoFragment : Fragment() {
 
     private fun observadorViewModel() {
         observadorListaReto()
+        observadorProgress()
+    }
+
+    private fun observadorProgress() {
+        juegoViewModel.progresState.observe(viewLifecycleOwner) { status ->
+            binding.progress.isVisible = status
+        }
     }
 
     private fun observadorListaReto() {

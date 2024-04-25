@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.picobotella.model.Reto
 import com.example.picobotella.repository.RetoRepository
+import com.example.picobotella.utils.Constants
 import com.example.picobotella.utils.Constants.TIEMPO
 import com.example.picobotella.view.MainActivity
 import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
@@ -23,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class JuegoViewModel(application: Application): AndroidViewModel(application) {
     private val context = getApplication<Application>()
@@ -157,6 +159,19 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
             } catch (e: Exception) {
                 _progresState.value = false
             }
+        }
+    }
+
+    fun obtenerDescripcionReto(listaReto: MutableList<Reto>): String {
+        var description = ""
+        return if(listaReto.isNotEmpty()) {
+            val tamanio = listaReto.size
+            val randomReto = Random.nextInt(0, tamanio)
+            description = listaReto[randomReto].descripcionReto
+            description
+        } else {
+            val emptyReto = Constants.EMPTY_RETO
+            emptyReto
         }
     }
 

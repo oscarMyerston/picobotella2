@@ -11,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentHomeBinding
+import com.example.picobotella.model.Reto
 import com.example.picobotella.viewmodel.JuegoViewModel
 import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
     // private lateinit var navController: NavController
+    private lateinit var listaReto: MutableList<Reto>
     private lateinit var audioFondo: MediaPlayer
     private lateinit var audioGiroBotella: MediaPlayer
     private lateinit var audioMostrarReto: MediaPlayer
@@ -43,6 +45,14 @@ class HomeFragment : Fragment() {
         observadorShowDialogReto()
         controladoresMultimedia()
         observadorSonido()
+        observadorListaReto()
+    }
+
+    private fun observadorListaReto() {
+        juegoViewModel.obtenerListaReto()
+        juegoViewModel.listaReto.observe(viewLifecycleOwner) {  lista ->
+            listaReto = lista
+        }
     }
 
     private fun observadorSonido() {
@@ -76,8 +86,12 @@ class HomeFragment : Fragment() {
                     juegoViewModel.esperar(3)
                 }
                 audioSuspenso.pause()
-                val mensajeReto = "Debes tomar dos tragos"
-                juegoViewModel.dialogoMostraReto(requireContext(), audioFondo, mensajeReto)
+
+                juegoViewModel.dialogoMostraReto(
+                    requireContext(),
+                    audioFondo,
+                    juegoViewModel.obtenerDescripcionReto(listaReto)
+                )
                 audioGiroBotella.pause()
                 audioMostrarReto.start()
                 audioBoton.pause()

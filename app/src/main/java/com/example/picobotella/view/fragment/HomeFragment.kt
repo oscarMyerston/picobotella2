@@ -2,6 +2,7 @@ package com.example.picobotella.view.fragment
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -80,7 +81,31 @@ class HomeFragment : Fragment() {
 
     private fun observadorShowDialogReto() {
         juegoViewModel.statusShowDialog.observe(viewLifecycleOwner) { status ->
+
             if (status) {
+                val countDownTimer = object : CountDownTimer(4000, 1000) {
+                    override fun onTick(p0: Long) {
+                         audioSuspenso.start()
+                        binding.tvCuentaRegresiva.text = (p0 / 1000).toString()
+                    }
+
+                    override fun onFinish() {
+                        audioSuspenso.pause()
+                        audioMostrarReto.start()
+                        juegoViewModel.dialogoMostraReto(
+                            requireContext(),
+                            audioFondo,
+                            juegoViewModel.obtenerDescripcionReto(listaReto)
+                        )
+                        audioGiroBotella.pause()
+                        audioMostrarReto.start()
+                        audioBoton.pause()
+                        binding.tvCuentaRegresiva.text = ""
+                    }
+                }
+                countDownTimer.start()
+            }
+            /*if (status) {
                 runBlocking {
                     audioSuspenso.start()
                     juegoViewModel.esperar(3)
@@ -95,7 +120,7 @@ class HomeFragment : Fragment() {
                 audioGiroBotella.pause()
                 audioMostrarReto.start()
                 audioBoton.pause()
-            }
+            }*/
         }
     }
 

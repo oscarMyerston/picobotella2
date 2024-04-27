@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_agregarRetoFragment"
             app:destination="@id/agregarRetoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/reglasJuegoFragment"
@@ -27,4 +30,9 @@
         android:name="com.example.picobotella.view.fragment.AgregarRetoFragment"
         android:label="AgregarRetoFragment"
         tools:layout="@layout/fragment_agregar_reto"/>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.picobotella.view.fragment.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_web_view" />/>
 </navigation>

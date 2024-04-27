@@ -15,5 +15,6 @@
     <string name="editar_reto">Editar Reto</string>
     <string name="cancelar">Cancelar</string>
     <string name="guardar">Guardar</string>
+    <string name="calificacion">Calificación App</string>
 
 </resources>

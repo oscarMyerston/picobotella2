@@ -151,6 +151,12 @@ class HomeFragment : Fragment() {
             juegoViewModel.girarBotella()
         }
 
+        binding.icContentMenu.idImgEstrella.setOnClickListener {
+            audioFondo.pause()
+            findNavController().navigate(R.id.action_homeFragment_to_webViewFragment)
+            juegoViewModel.statusShowDialog(false)
+        }
+
         binding.icContentMenu.clVolumen.setOnClickListener {
             sonido = !sonido
             juegoViewModel.setHabilitarSonido(sonido)

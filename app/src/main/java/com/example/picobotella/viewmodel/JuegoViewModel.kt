@@ -175,4 +175,12 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun obtenerUrlApp(activity: Activity): String {
+        // val nombrePaquete = activity.packageName
+        val nombrePaquete = "com.microsoft.teams"
+        val urlApp = "https://play.google.com/store/apps/details?id=${nombrePaquete}"
+        return  urlApp
+    }
+
+
 }

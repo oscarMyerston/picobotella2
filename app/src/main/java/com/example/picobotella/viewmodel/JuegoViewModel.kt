@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.picobotella.R
 import com.example.picobotella.model.Reto
 import com.example.picobotella.repository.RetoRepository
 import com.example.picobotella.utils.Constants
@@ -180,6 +181,19 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
         //val nombrePaquete = "com.microsoft.teams"
         val urlApp = "https://play.google.com/store/apps/details?id=${nombrePaquete}"
         return  urlApp
+    }
+
+    fun compartirApp(audioFondo: MediaPlayer, activity: Activity) {
+        audioFondo.pause()
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.setType("text/plain")
+        intent.putExtra(Intent.EXTRA_SUBJECT,activity.getString(R.string.app_name))
+        val nombrePaquete = activity.packageName
+        val eslogan = "App pico botella.\nSolo los valientes lo juegan !!"
+        val urlApp = "https://play.google.com/store/apps/details?id=${nombrePaquete}"
+        var compartir = eslogan + urlApp
+        intent.putExtra(Intent.EXTRA_TEXT, compartir)
+        activity.startActivity(intent)
     }
 
 

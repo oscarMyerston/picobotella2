@@ -167,6 +167,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_agregarRetoFragment)
             juegoViewModel.statusShowDialog(false)
         }
+
+        binding.icContentMenu.idBtnCompartir.setOnClickListener {
+            juegoViewModel.compartirApp(audioFondo, requireActivity())
+        }
     }
 
     private fun observadorViewModel() {

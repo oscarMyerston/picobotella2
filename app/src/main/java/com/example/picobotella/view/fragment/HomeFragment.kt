@@ -12,9 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentHomeBinding
+import com.example.picobotella.model.Pokemon
 import com.example.picobotella.model.Reto
 import com.example.picobotella.viewmodel.JuegoViewModel
-import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
     // private lateinit var navController: NavController
@@ -24,6 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var audioMostrarReto: MediaPlayer
     private lateinit var audioBoton: MediaPlayer
     private lateinit var audioSuspenso: MediaPlayer
+    private lateinit var listaPokemon: MutableList<Pokemon>
 
     private val juegoViewModel: JuegoViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
@@ -47,9 +48,19 @@ class HomeFragment : Fragment() {
         controladoresMultimedia()
         observadorSonido()
         observadorListaReto()
+        observadorListaPokemon()
+    }
+
+    private fun observadorListaPokemon() {
+        listaPokemon = mutableListOf()
+        juegoViewModel.listaPokemon()
+        juegoViewModel.listaPokemon.observe(viewLifecycleOwner){ lista ->
+            listaPokemon = lista
+        }
     }
 
     private fun observadorListaReto() {
+        listaReto = mutableListOf()
         juegoViewModel.obtenerListaReto()
         juegoViewModel.listaReto.observe(viewLifecycleOwner) {  lista ->
             listaReto = lista
@@ -95,7 +106,8 @@ class HomeFragment : Fragment() {
                         juegoViewModel.dialogoMostraReto(
                             requireContext(),
                             audioFondo,
-                            juegoViewModel.obtenerDescripcionReto(listaReto)
+                            juegoViewModel.obtenerDescripcionReto(listaReto),
+                            juegoViewModel.obtenerPokemon(listaPokemon)
                         )
                         audioGiroBotella.pause()
                         audioMostrarReto.start()

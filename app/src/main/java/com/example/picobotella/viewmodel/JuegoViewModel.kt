@@ -5,16 +5,15 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.picobotella.R
+import com.example.picobotella.model.Pokemon
 import com.example.picobotella.model.Reto
 import com.example.picobotella.repository.RetoRepository
 import com.example.picobotella.utils.Constants
@@ -55,6 +54,10 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
 
     private val _progresState = MutableLiveData(false)
     val progresState: LiveData<Boolean> get() = _progresState
+
+    // Para almacenar una lista de pokemons
+    private val _listaPokemon = MutableLiveData<MutableList<Pokemon>> ()
+    val listaPokemon: LiveData<MutableList<Pokemon>> get() = _listaPokemon
 
     fun splashScreen(activity: Activity) {
         val executor = Executors.newSingleThreadScheduledExecutor()
@@ -98,8 +101,13 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
         _rotacionBotella.value = rotacion
     }
 
-    fun dialogoMostraReto(context: Context, audioFondo: MediaPlayer, mensajeReto: String) {
-        showDialogMostrarReto(context, audioFondo, mensajeReto)
+    fun dialogoMostraReto(
+        context: Context,
+        audioFondo: MediaPlayer,
+        mensajeReto: String,
+        pokemon: Pokemon
+    ) {
+        showDialogMostrarReto(context, audioFondo, mensajeReto, pokemon)
     }
 
     fun statusShowDialog(status: Boolean) {
@@ -196,5 +204,29 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
         activity.startActivity(intent)
     }
 
+    fun listaPokemon() {
+        viewModelScope.launch {
+            _progresState.value = true
+            try {
+                _listaPokemon.value = retoRepository.getListaPokemon()
+                _progresState.value = false
+            } catch (e: Exception) {
+                _progresState.value = false
+            }
+        }
+    }
+
+    fun obtenerPokemon(listaPokemon: MutableList<Pokemon>): Pokemon {
+        var pokemon : Pokemon
+        return  if(listaPokemon.isNotEmpty()) {
+            val tamanio = listaPokemon.size
+            val randomPokemon = Random.nextInt(0, tamanio)
+            pokemon = listaPokemon[randomPokemon]
+            pokemon
+        } else {
+            pokemon = Pokemon(0,R.drawable.logoutiltek.toString())
+            pokemon
+        }
+    }
 
 }

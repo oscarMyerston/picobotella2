@@ -48,7 +48,6 @@ class HomeFragment : Fragment() {
         controladoresMultimedia()
         observadorSonido()
         observadorListaReto()
-        observadorListaPokemon()
     }
 
     private fun observadorListaPokemon() {
@@ -107,7 +106,8 @@ class HomeFragment : Fragment() {
                             requireContext(),
                             audioFondo,
                             juegoViewModel.obtenerDescripcionReto(listaReto),
-                            juegoViewModel.obtenerPokemon(listaPokemon)
+                            juegoViewModel.obtenerPokemon(listaPokemon),
+                            juegoViewModel
                         )
                         audioGiroBotella.pause()
                         audioMostrarReto.start()
@@ -161,6 +161,7 @@ class HomeFragment : Fragment() {
 
         binding.btnGirar.setOnClickListener {
             juegoViewModel.girarBotella()
+            observadorListaPokemon()
         }
 
         binding.icContentMenu.idImgEstrella.setOnClickListener {

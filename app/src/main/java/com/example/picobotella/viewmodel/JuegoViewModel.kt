@@ -5,6 +5,9 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
@@ -22,6 +25,7 @@ import com.example.picobotella.view.MainActivity
 import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.Version
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
@@ -105,9 +109,10 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
         context: Context,
         audioFondo: MediaPlayer,
         mensajeReto: String,
-        pokemon: Pokemon
+        pokemon: Pokemon,
+        juegoViewModel: JuegoViewModel
     ) {
-        showDialogMostrarReto(context, audioFondo, mensajeReto, pokemon)
+        showDialogMostrarReto(context, audioFondo, mensajeReto, pokemon , juegoViewModel)
     }
 
     fun statusShowDialog(status: Boolean) {
@@ -224,8 +229,21 @@ class JuegoViewModel(application: Application): AndroidViewModel(application) {
             pokemon = listaPokemon[randomPokemon]
             pokemon
         } else {
-            pokemon = Pokemon(0,R.drawable.logoutiltek.toString())
+            pokemon = Pokemon(0, R.drawable.logoutiltek.toString())
             pokemon
+        }
+    }
+
+    fun isConnect(context: Context): Boolean {
+        // connectivityManager para obtener información sobre la conectividad de red
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+            return networkInfo.isConnected
         }
     }
 

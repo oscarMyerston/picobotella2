@@ -1,18 +1,20 @@
 package com.example.picobotella.repository
 
 import android.content.Context
-import com.example.picobotella.data.DBReto
 import com.example.picobotella.data.DaoReto
 import com.example.picobotella.model.Pokemon
 import com.example.picobotella.model.Reto
 import com.example.picobotella.service.ApiService
-import com.example.picobotella.service.ApiUtils
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RetoRepository(val context: Context) {
-    private var daoReto : DaoReto = DBReto.getDataBase(context).daoReto()
-    private var apiService: ApiService = ApiUtils.getApiService()
+class RetoRepository @Inject constructor(
+    @ApplicationContext val context: Context,
+    private val daoReto: DaoReto,
+    private val apiService: ApiService
+){
 
     suspend fun agregarReto(reto: Reto) {
         withContext(Dispatchers.IO) {

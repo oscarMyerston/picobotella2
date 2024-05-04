@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentReglasJuegoBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+@AndroidEntryPoint
 class ReglasJuegoFragment : Fragment() {
     private lateinit var binding : FragmentReglasJuegoBinding
     override fun onCreate(savedInstanceState: Bundle?) {

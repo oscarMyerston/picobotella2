@@ -14,6 +14,7 @@ import android.view.animation.RotateAnimation
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.picobotella.R
 import com.example.picobotella.model.Pokemon
@@ -23,16 +24,18 @@ import com.example.picobotella.utils.Constants
 import com.example.picobotella.utils.Constants.TIEMPO
 import com.example.picobotella.view.MainActivity
 import com.example.picobotella.view.dialogo.DialogoMostrarReto.showDialogMostrarReto
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.internal.Version
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.random.Random
-
-class JuegoViewModel(application: Application): AndroidViewModel(application) {
-    private val context = getApplication<Application>()
-    private val retoRepository = RetoRepository(context)
+@HiltViewModel
+class JuegoViewModel @Inject constructor(
+    private val retoRepository: RetoRepository
+    ):  ViewModel() {
 
     private val _rotacionBotella = MutableLiveData<RotateAnimation>()
     val rotacionBotella: LiveData<RotateAnimation> get() = _rotacionBotella

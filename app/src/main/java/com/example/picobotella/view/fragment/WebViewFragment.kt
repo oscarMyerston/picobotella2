@@ -12,7 +12,9 @@ import com.example.picobotella.R
 import com.example.picobotella.databinding.FragmentHomeBinding
 import com.example.picobotella.databinding.FragmentWebViewBinding
 import com.example.picobotella.viewmodel.JuegoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WebViewFragment : Fragment() {
 
     private val juegoViewModel: JuegoViewModel by viewModels()

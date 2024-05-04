@@ -15,7 +15,9 @@ import com.example.picobotella.databinding.FragmentHomeBinding
 import com.example.picobotella.model.Pokemon
 import com.example.picobotella.model.Reto
 import com.example.picobotella.viewmodel.JuegoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     // private lateinit var navController: NavController
     private lateinit var listaReto: MutableList<Reto>

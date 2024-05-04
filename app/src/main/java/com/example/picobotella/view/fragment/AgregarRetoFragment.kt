@@ -15,8 +15,9 @@ import com.example.picobotella.databinding.FragmentAgregarRetoBinding
 import com.example.picobotella.view.adapter.RetoAdapter
 import com.example.picobotella.view.dialogo.DialogoAgregarReto.showDialogAgregarReto
 import com.example.picobotella.viewmodel.JuegoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AgregarRetoFragment : Fragment() {
     private lateinit var binding: FragmentAgregarRetoBinding
     private val juegoViewModel: JuegoViewModel by viewModels()
